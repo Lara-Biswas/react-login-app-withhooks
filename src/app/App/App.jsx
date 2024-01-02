@@ -9,12 +9,14 @@ import {
   Route,
   Link,
   Redirect,
+  useHistory,
 } from "react-router-dom";
 import "./App.css";
 
 // App component
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const history = useHistory();
 
   return (
     <Router>
@@ -35,6 +37,14 @@ const App = () => {
                 <li>
                   <Link to="/companyInfo">Company Info</Link>
                 </li>
+                <li
+                  onClick={(e) => {
+                    setLoggedIn(false);
+                    history.push("/login");
+                  }}
+                >
+                  <Link to="/logout">Logout</Link>
+                </li>
               </>
             )}
           </ul>
@@ -48,8 +58,7 @@ const App = () => {
         <Route path="/movieList" component={MovieList} />
         <Route path="/companyInfo" component={CompanyInfo} />
 
-        {/* Redirect to login if not logged in */}
-        {!loggedIn && <Redirect to="/login" />}
+        {!loggedIn && <Redirect to="/movieList" />}
       </div>
     </Router>
   );

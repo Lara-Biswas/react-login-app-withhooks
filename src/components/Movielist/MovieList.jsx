@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import "./MoviesList.css";
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
@@ -37,39 +38,84 @@ const MovieList = () => {
   return (
     <div>
       <h1>Movies List</h1>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {movies.map((movie) => (
+      {movies.map((movie, index) => (
+        <div
+          key={movie._id}
+          style={{
+            border: "1px solid #ccc",
+            margin: "10px",
+            padding: "10px",
+            width: "500px",
+          }}
+        >
           <div
-            key={movie._id}
             style={{
-              border: "1px solid #ccc",
-              margin: "10px",
-              padding: "10px",
-              width: "300px",
+              display: "flex",
             }}
           >
-            <img
-              src={movie.poster}
-              alt={movie.title}
-              style={{ width: "100%", height: "200px", objectFit: "cover" }}
-            />
-            <h2>{movie.title}</h2>
-            <p>Genre: {movie.genre}</p>
-            <p>Language: {movie.language}</p>
-            <p>Voting Count: {movie.totalVoted}</p>
-            <button onClick={() => handleWatchTrailer(movie)}>
+            <div
+              style={{
+                marginRight: "10px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <button onClick={() => console.log(`Vote for ${movie.title}`)}>
+                ▲
+              </button>
+              <p>{movie.totalVoted}</p>
+              <button
+                onClick={() => console.log(`Vote against ${movie.title}`)}
+              >
+                ▼
+              </button>
+              <div>Votes</div>
+            </div>
+            <div style={{ width: "110px" }}>
+              <img
+                src={movie.poster}
+                alt={movie.title}
+                style={{ width: "100%", height: "auto" }}
+              />
+            </div>
+            <div style={{ marginLeft: "10px", flex: "1", lineHeight: 0.3 }}>
+              <h3>{movie.title}</h3>
+              <p>
+                <span style={{ color: "grey" }}>Genre:</span> {movie.genre}
+              </p>
+              <p>
+                <span style={{ color: "grey" }}>Director:</span>{" "}
+                {movie.director && movie.director.join(", ")}
+              </p>
+              <p className="ellipsis-paragraph">
+                <span style={{ color: "grey" }}>Starring:</span>{" "}
+                {movie.stars && movie.stars.join(", ")}
+              </p>
+              <p>
+                {movie.language} {"|"}{" "}
+                {new Date(movie.releasedDate * 1000).toLocaleDateString(
+                  "en-US",
+                  { day: "numeric", month: "short" }
+                )}
+                {movie.runTime && ` | ${movie.runTime} mins`}
+              </p>
+              <p>
+                {movie.pageViews} views | Voted by {movie.totalVoted} People
+              </p>
+            </div>
+          </div>
+          <div>
+            <button
+              onClick={() => console.log(`Watch trailer for ${movie.title}`)}
+            >
               Watch Trailer
             </button>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
-};
-
-const handleWatchTrailer = (movie) => {
-  // Handle watch trailer action
-  console.log(`Watch trailer for ${movie.title}`);
 };
 
 export default MovieList;

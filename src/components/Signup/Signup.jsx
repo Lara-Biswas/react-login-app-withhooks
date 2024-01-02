@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -6,6 +7,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [profession, setProfession] = useState("");
+  const history = useHistory();
 
   const handleSignup = () => {
     // Save user data to local storage
@@ -17,6 +19,7 @@ const Signup = () => {
       profession,
     };
     localStorage.setItem("userData", JSON.stringify(userData));
+    history.push("/login");
   };
 
   return (

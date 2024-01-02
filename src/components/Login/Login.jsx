@@ -1,15 +1,17 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Login = ({ setLoggedIn }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [invalidCredentials, setInvalidCredentials] = useState(false);
-
+  const history = useHistory();
   const handleLogin = () => {
     // Retrieve user data from local storage
     const userData = JSON.parse(localStorage.getItem("userData"));
     if (userData && userData.name === name && userData.password === password) {
       setLoggedIn(true);
+      history.push("/movieList");
     } else {
       setInvalidCredentials(true);
     }
