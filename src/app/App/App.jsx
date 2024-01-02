@@ -58,7 +58,7 @@ const App = () => {
         <Route path="/movieList" component={MovieList} />
         <Route path="/companyInfo" component={CompanyInfo} />
 
-        {!loggedIn && <Redirect to="/movieList" />}
+        {!loggedIn && <Redirect to="/login" />}
       </div>
     </Router>
   );
